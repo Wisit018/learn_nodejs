@@ -5,6 +5,7 @@ const chalk = require("chalk"); // ใส่สี
 const debug = require('debug')('app'); // ดูเหตุการ์ณว่ามีอะไรบ้าง
 const morgan = require('morgan'); // ดู Log
 const path = require('path');
+const products = require("./data/products.json")
 const productRouter = express.Router();
 
 const app = express();
@@ -17,17 +18,13 @@ app.set("views","./src/views")
 app.set("view engine", "ejs")
 
 productRouter.route("/").get((req,res) =>{
-    res.render('products',{
-        products: [
-            {produtsTitle: 'item1' ,Descripttion: 'ID : 1' , Price : '100'},
-            {produtsTitle: 'item2' ,Descripttion: 'ID : 2' , Price : '200'},
-            {produtsTitle: 'item3' ,Descripttion: 'ID : 3' , Price : '300'},
-            {produtsTitle: 'item4' ,Descripttion: 'ID : 4' , Price : '400'}
-        ]
-    })
+    res.render('products',
+        products,
+    )
 })
 
-productRouter.route("/1").get((req,res) =>{
+productRouter.route("/:id").get((req,res) =>{
+    const id = req.params.id;
     res.send("Hello Products");
 })
 
